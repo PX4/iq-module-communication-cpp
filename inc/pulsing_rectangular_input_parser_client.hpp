@@ -20,29 +20,31 @@
 
 const uint8_t kTypePulsingRectangularInputParser = 89;
 
-class PulsingRectangularInputParserClient : public ClientAbstract {
-   public:
-    PulsingRectangularInputParserClient(uint8_t obj_idn)
-        : ClientAbstract(kTypePulsingRectangularInputParser, obj_idn),
-          pulsing_voltage_mode_(kTypePulsingRectangularInputParser, obj_idn, kSubPulsingVoltageMode),
-          pulsing_voltage_limit_(kTypePulsingRectangularInputParser, obj_idn, kSubPulsingVoltageLimit){};
+class PulsingRectangularInputParserClient : public ClientAbstract
+{
+public:
+	PulsingRectangularInputParserClient(uint8_t obj_idn)
+		: ClientAbstract(kTypePulsingRectangularInputParser, obj_idn),
+		  pulsing_voltage_mode_(kTypePulsingRectangularInputParser, obj_idn, kSubPulsingVoltageMode),
+		  pulsing_voltage_limit_(kTypePulsingRectangularInputParser, obj_idn, kSubPulsingVoltageLimit) {};
 
-    // Client Entries
-    ClientEntry<uint8_t> pulsing_voltage_mode_;
-    ClientEntry<float> pulsing_voltage_limit_;
+	// Client Entries
+	ClientEntry<uint8_t> pulsing_voltage_mode_;
+	ClientEntry<float> pulsing_voltage_limit_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubPulsingVoltageLimit + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &pulsing_voltage_mode_,  // 0
-            &pulsing_voltage_limit_  // 1
-        };
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+	void ReadMsg(uint8_t *rx_data, uint8_t rx_length)
+	{
+		static const uint8_t kEntryLength              = kSubPulsingVoltageLimit + 1;
+		ClientEntryAbstract *entry_array[kEntryLength] = {
+			&pulsing_voltage_mode_,  // 0
+			&pulsing_voltage_limit_  // 1
+		};
+		ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+	}
 
-   private:
-    static const uint8_t kSubPulsingVoltageMode  = 0;
-    static const uint8_t kSubPulsingVoltageLimit = 1;
+private:
+	static const uint8_t kSubPulsingVoltageMode  = 0;
+	static const uint8_t kSubPulsingVoltageLimit = 1;
 };
 
 #endif /* PULSING_RECTANGULAR_INPUT_PARSER_CLIENT_HPP_ */
