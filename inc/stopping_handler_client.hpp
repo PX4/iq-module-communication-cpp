@@ -20,29 +20,31 @@
 
 const uint8_t kTypeStoppingHandler = 87;
 
-class StoppingHandlerClient : public ClientAbstract {
-   public:
-    StoppingHandlerClient(uint8_t obj_idn)
-        : ClientAbstract(kTypeStoppingHandler, obj_idn),
-          stopped_speed_(kTypeStoppingHandler, obj_idn, kSubStoppedSpeed),
-          stopped_time_(kTypeStoppingHandler, obj_idn, kSubStoppedTime){};
+class StoppingHandlerClient : public ClientAbstract
+{
+public:
+	StoppingHandlerClient(uint8_t obj_idn)
+		: ClientAbstract(kTypeStoppingHandler, obj_idn),
+		  stopped_speed_(kTypeStoppingHandler, obj_idn, kSubStoppedSpeed),
+		  stopped_time_(kTypeStoppingHandler, obj_idn, kSubStoppedTime) {};
 
-    // Client Entries
-    ClientEntry<float> stopped_speed_;
-    ClientEntry<float> stopped_time_;
+	// Client Entries
+	ClientEntry<float> stopped_speed_;
+	ClientEntry<float> stopped_time_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubStoppedTime + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &stopped_speed_,  // 0
-            &stopped_time_    // 1
-        };
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+	void ReadMsg(uint8_t *rx_data, uint8_t rx_length)
+	{
+		static const uint8_t kEntryLength              = kSubStoppedTime + 1;
+		ClientEntryAbstract *entry_array[kEntryLength] = {
+			&stopped_speed_,  // 0
+			&stopped_time_    // 1
+		};
+		ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+	}
 
-   private:
-    static const uint8_t kSubStoppedSpeed = 0;
-    static const uint8_t kSubStoppedTime  = 1;
+private:
+	static const uint8_t kSubStoppedSpeed = 0;
+	static const uint8_t kSubStoppedTime  = 1;
 };
 
 #endif /* STOPPING_HANDLER_CLIENT_HPP_ */

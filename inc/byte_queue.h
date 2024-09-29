@@ -13,11 +13,11 @@
   Contributors: Matthew Piccoli, Raphael Van Hoffelen
 */
 
-/* A FIFO buffer for uint8 bytes implemented with a fixed size circular 
- * buffer.  A ByteQueue struct maintains the buffer data and state for one 
- * buffer instance, and many simultaneous instances are supported. An operation 
- * on one buffer must not be interrupted by another operation on that same 
- * buffer (possibly via an interrupt). This restriction is not enforced and no 
+/* A FIFO buffer for uint8 bytes implemented with a fixed size circular
+ * buffer.  A ByteQueue struct maintains the buffer data and state for one
+ * buffer instance, and many simultaneous instances are supported. An operation
+ * on one buffer must not be interrupted by another operation on that same
+ * buffer (possibly via an interrupt). This restriction is not enforced and no
  * error code is generated.
  */
 
@@ -32,7 +32,7 @@ extern "C" {
 
 /// ByteQueue instance state struct, voluntarily opaque.
 struct ByteQueue {
-	uint8_t* data;      // pointer to array allocated for data
+	uint8_t *data;      // pointer to array allocated for data
 	uint8_t *start;     // points to first data byte
 	uint8_t *end;       // points to empty byte past last data byte
 	uint16_t data_size; // size allocated for data
@@ -41,7 +41,7 @@ struct ByteQueue {
 
 // initialize buffer as empty
 // must provide pointer to allocated array for buffer to use
-void InitBQ(struct ByteQueue *b, uint8_t* data, uint16_t data_size);
+void InitBQ(struct ByteQueue *b, uint8_t *data, uint16_t data_size);
 
 // return 1 if buffer full, 0 else
 int8_t IsFullBQ(struct ByteQueue *b);
