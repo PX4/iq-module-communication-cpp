@@ -67,6 +67,25 @@ class EscPropellerInputParserClient : public ClientAbstract {
         ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
     }
 
+    void UpdateEntryIds(uint8_t new_id){
+        static const uint8_t kEntryLength = kSubZeroSpinTolerance + 1;
+        ClientEntryAbstract* entry_array[kEntryLength] = {
+            &mode_,                // 0
+            &raw_value_,           // 1
+            nullptr,               // 2
+            &sign_,                // 3
+            &volts_max_,           // 4
+            &velocity_max_,        // 5
+            &thrust_max_,          // 6
+            &safe_factor_,         // 7
+            &flip_negative_,       // 8
+            &zero_spin_throttle_,  // 9
+            &zero_spin_tolerance_  // 10
+        };
+
+        UpdateEntryIdsFromList(entry_array, kEntryLength, new_id);
+    }
+
    private:
     static const uint8_t kSubMode              = 0;
     static const uint8_t kSubRawValue          = 1;

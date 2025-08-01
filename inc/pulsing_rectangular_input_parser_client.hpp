@@ -40,6 +40,16 @@ class PulsingRectangularInputParserClient : public ClientAbstract {
         ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
     }
 
+    void UpdateEntryIds(uint8_t new_id){
+      static const uint8_t kEntryLength = kSubPulsingVoltageLimit + 1;
+      ClientEntryAbstract* entry_array[kEntryLength] = {
+          &pulsing_voltage_mode_,  // 0
+          &pulsing_voltage_limit_  // 1
+      };
+
+      UpdateEntryIdsFromList(entry_array, kEntryLength, new_id);
+    }
+
    private:
     static const uint8_t kSubPulsingVoltageMode  = 0;
     static const uint8_t kSubPulsingVoltageLimit = 1;

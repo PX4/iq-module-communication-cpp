@@ -89,6 +89,32 @@ class VoltageSuperPositionClient : public ClientAbstract {
         ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
     }
 
+    void UpdateEntryIds(uint8_t new_id){
+        static const uint8_t kEntryLength = kSubPropellerTorqueOffsetAngle + 1;
+        ClientEntryAbstract* entry_array[kEntryLength] = {
+            &zero_angle_,                    // 0
+            &frequency_,                     // 1
+            &phase_,                         // 2
+            &amplitude_,                     // 3
+            &voltage_,                       // 4
+            &max_allowed_amplitude_,         // 5
+            &velocity_cutoff_,               // 6
+            &poly_limit_zero_,               // 7
+            &poly_limit_one_,                // 8
+            &poly_limit_two_,                // 9
+            &poly_limit_three_,              // 10
+            &phase_lead_time_,               // 11
+            &phase_lead_angle_,              // 12
+            &phase_act_,                     // 13
+            &amplitude_act_,                 // 14
+            &sample_mechanical_zero_,        // 15
+            &propeller_torque_offset_angle_  // 16
+        };
+
+        UpdateEntryIdsFromList(entry_array, kEntryLength, new_id);
+    }
+
+
    private:
     static const uint8_t kSubZeroAngle                  = 0;
     static const uint8_t kSubFrequency                  = 1;

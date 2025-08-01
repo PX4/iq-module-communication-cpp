@@ -68,3 +68,11 @@ int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
   }
   return 0; // I didn't parse anything
 }
+
+void UpdateEntryIdsFromList(ClientEntryAbstract** entry_array, uint8_t entry_length, uint8_t new_id){
+  for(uint8_t entry = 0; entry < entry_length; entry++){
+    if(entry_array[entry] != nullptr){
+      entry_array[entry]->UpdateModuleId(new_id);
+    }
+  }
+}
