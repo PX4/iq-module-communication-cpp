@@ -215,6 +215,4 @@ int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
 int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
   ClientEntryAbstract& entry);
 
-void UpdateEntryIdsFromList(ClientEntryAbstract** entry_array, uint8_t entry_length, uint8_t new_id);
-
 #endif // CLIENT_COMMUNICATION_H
