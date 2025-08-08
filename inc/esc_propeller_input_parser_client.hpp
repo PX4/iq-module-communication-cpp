@@ -33,7 +33,11 @@ class EscPropellerInputParserClient : public ClientAbstract {
           safe_factor_(kTypeEscPropellerInputParser, obj_idn, kSubSafeFactor),
           flip_negative_(kTypeEscPropellerInputParser, obj_idn, kSubFlipNegative),
           zero_spin_throttle_(kTypeEscPropellerInputParser, obj_idn, kSubZeroSpinThrottle),
-          zero_spin_tolerance_(kTypeEscPropellerInputParser, obj_idn, kSubZeroSpinTolerance){};
+          zero_spin_tolerance_(kTypeEscPropellerInputParser, obj_idn, kSubZeroSpinTolerance)
+          {
+            entry_array_head = entry_array;
+            num_entries = kEntryLength;
+          };
 
     // Client Entries
     // Control commands
@@ -49,41 +53,7 @@ class EscPropellerInputParserClient : public ClientAbstract {
     ClientEntry<float> zero_spin_tolerance_;
 
     void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubZeroSpinTolerance + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &mode_,                // 0
-            &raw_value_,           // 1
-            nullptr,               // 2
-            &sign_,                // 3
-            &volts_max_,           // 4
-            &velocity_max_,        // 5
-            &thrust_max_,          // 6
-            &safe_factor_,         // 7
-            &flip_negative_,       // 8
-            &zero_spin_throttle_,  // 9
-            &zero_spin_tolerance_  // 10
-        };
-
         ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
-
-    void UpdateEntryIds(uint8_t new_id){
-        static const uint8_t kEntryLength = kSubZeroSpinTolerance + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &mode_,                // 0
-            &raw_value_,           // 1
-            nullptr,               // 2
-            &sign_,                // 3
-            &volts_max_,           // 4
-            &velocity_max_,        // 5
-            &thrust_max_,          // 6
-            &safe_factor_,         // 7
-            &flip_negative_,       // 8
-            &zero_spin_throttle_,  // 9
-            &zero_spin_tolerance_  // 10
-        };
-
-        UpdateEntryIdsFromList(entry_array, kEntryLength, new_id);
     }
 
    private:
@@ -97,6 +67,21 @@ class EscPropellerInputParserClient : public ClientAbstract {
     static const uint8_t kSubFlipNegative      = 8;
     static const uint8_t kSubZeroSpinThrottle  = 9;
     static const uint8_t kSubZeroSpinTolerance = 10;
+
+    static const uint8_t kEntryLength = kSubZeroSpinTolerance + 1;
+    ClientEntryAbstract* entry_array[kEntryLength] = {
+        &mode_,                // 0
+        &raw_value_,           // 1
+        nullptr,               // 2
+        &sign_,                // 3
+        &volts_max_,           // 4
+        &velocity_max_,        // 5
+        &thrust_max_,          // 6
+        &safe_factor_,         // 7
+        &flip_negative_,       // 8
+        &zero_spin_throttle_,  // 9
+        &zero_spin_tolerance_  // 10
+    };
 };
 
 #endif /* ESC_PROPELLER_INPUT_PARSER_CLIENT_HPP_ */

@@ -42,7 +42,11 @@ class VoltageSuperPositionClient : public ClientAbstract {
           amplitude_act_(kTypeVoltageSuperposition, obj_idn, kSubAmplitudeActual),
           sample_mechanical_zero_(kTypeVoltageSuperposition, obj_idn, kSubSampleMechanicalZero),
           propeller_torque_offset_angle_(kTypeVoltageSuperposition, obj_idn,
-                                         kSubPropellerTorqueOffsetAngle){};
+                                         kSubPropellerTorqueOffsetAngle)
+          {
+            entry_array_head = entry_array;
+            num_entries = kEntryLength;
+          };
 
     // Client Entries
     ClientEntry<float> zero_angle_;
@@ -64,56 +68,8 @@ class VoltageSuperPositionClient : public ClientAbstract {
     ClientEntry<float> propeller_torque_offset_angle_;
 
     void ReadMsg(uint8_t* rx_data, uint8_t rx_length) override {
-        static const uint8_t kEntryLength              = kSubPropellerTorqueOffsetAngle + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &zero_angle_,                    // 0
-            &frequency_,                     // 1
-            &phase_,                         // 2
-            &amplitude_,                     // 3
-            &voltage_,                       // 4
-            &max_allowed_amplitude_,         // 5
-            &velocity_cutoff_,               // 6
-            &poly_limit_zero_,               // 7
-            &poly_limit_one_,                // 8
-            &poly_limit_two_,                // 9
-            &poly_limit_three_,              // 10
-            &phase_lead_time_,               // 11
-            &phase_lead_angle_,              // 12
-            &phase_act_,                     // 13
-            &amplitude_act_,                 // 14
-            &sample_mechanical_zero_,        // 15
-            &propeller_torque_offset_angle_  // 16
-
-        };
-
         ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
     }
-
-    void UpdateEntryIds(uint8_t new_id){
-        static const uint8_t kEntryLength = kSubPropellerTorqueOffsetAngle + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &zero_angle_,                    // 0
-            &frequency_,                     // 1
-            &phase_,                         // 2
-            &amplitude_,                     // 3
-            &voltage_,                       // 4
-            &max_allowed_amplitude_,         // 5
-            &velocity_cutoff_,               // 6
-            &poly_limit_zero_,               // 7
-            &poly_limit_one_,                // 8
-            &poly_limit_two_,                // 9
-            &poly_limit_three_,              // 10
-            &phase_lead_time_,               // 11
-            &phase_lead_angle_,              // 12
-            &phase_act_,                     // 13
-            &amplitude_act_,                 // 14
-            &sample_mechanical_zero_,        // 15
-            &propeller_torque_offset_angle_  // 16
-        };
-
-        UpdateEntryIdsFromList(entry_array, kEntryLength, new_id);
-    }
-
 
    private:
     static const uint8_t kSubZeroAngle                  = 0;
@@ -133,6 +89,28 @@ class VoltageSuperPositionClient : public ClientAbstract {
     static const uint8_t kSubAmplitudeActual            = 14;
     static const uint8_t kSubSampleMechanicalZero       = 15;
     static const uint8_t kSubPropellerTorqueOffsetAngle = 16;
+
+    static const uint8_t kEntryLength              = kSubPropellerTorqueOffsetAngle + 1;
+    ClientEntryAbstract* entry_array[kEntryLength] = {
+        &zero_angle_,                    // 0
+        &frequency_,                     // 1
+        &phase_,                         // 2
+        &amplitude_,                     // 3
+        &voltage_,                       // 4
+        &max_allowed_amplitude_,         // 5
+        &velocity_cutoff_,               // 6
+        &poly_limit_zero_,               // 7
+        &poly_limit_one_,                // 8
+        &poly_limit_two_,                // 9
+        &poly_limit_three_,              // 10
+        &phase_lead_time_,               // 11
+        &phase_lead_angle_,              // 12
+        &phase_act_,                     // 13
+        &amplitude_act_,                 // 14
+        &sample_mechanical_zero_,        // 15
+        &propeller_torque_offset_angle_  // 16
+
+    };
 };
 
 #endif

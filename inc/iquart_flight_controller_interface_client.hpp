@@ -54,7 +54,11 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
           telemetry_(kTypeIQUartFlightControllerInterface, obj_idn, kSubTelemetry),
           throttle_cvi_(kTypeIQUartFlightControllerInterface, obj_idn, kSubThrottleCvi),
           x_cvi_(kTypeIQUartFlightControllerInterface, obj_idn, kSubXCvi),
-          y_cvi_(kTypeIQUartFlightControllerInterface, obj_idn, kSubYCvi){};
+          y_cvi_(kTypeIQUartFlightControllerInterface, obj_idn, kSubYCvi)
+          {
+            entry_array_head = entry_array;
+            num_entries = kEntryLength;
+          };
 
     // Client Entries
     PackedClientEntry packed_command_;
@@ -64,31 +68,8 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
     ClientEntry<uint8_t> y_cvi_;
 
     void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubYCvi + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &packed_command_, // 0
-            &telemetry_,     // 1
-            &throttle_cvi_,  // 2
-            &x_cvi_,         // 3
-            &y_cvi_          // 4
-        };
         ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
     }
-
-
-    void UpdateEntryIds(uint8_t new_id){
-        static const uint8_t kEntryLength = kSubYCvi + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &packed_command_, // 0
-            &telemetry_,     // 1
-            &throttle_cvi_,  // 2
-            &x_cvi_,         // 3
-            &y_cvi_          // 4
-        };
-
-        UpdateEntryIdsFromList(entry_array, kEntryLength, new_id);
-    }
-
 
     /**
      * @brief This function takes in an IFCIPackedMessage struct, and prepares the data as a series of bytes ready for transmission over IQUART
@@ -117,6 +98,15 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
     static const uint8_t kSubThrottleCvi     = 2;
     static const uint8_t kSubXCvi            = 3;
     static const uint8_t kSubYCvi            = 4;
+
+    static const uint8_t kEntryLength = kSubYCvi + 1;
+    ClientEntryAbstract* entry_array[kEntryLength] = {
+        &packed_command_, // 0
+        &telemetry_,     // 1
+        &throttle_cvi_,  // 2
+        &x_cvi_,         // 3
+        &y_cvi_          // 4
+    };
 };
 
 #endif /* IQUART_FLIGHT_CONTROLLER_INTERFACE_CLIENT_HPP_ */
