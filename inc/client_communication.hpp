@@ -181,7 +181,9 @@ class ClientAbstract{
   public:
     ClientAbstract(uint8_t type_idn, uint8_t obj_idn):
       type_idn_(type_idn),
-      obj_idn_(obj_idn) {};
+      obj_idn_(obj_idn),
+      entry_array_head(nullptr),
+      num_entries(0) {};
 
     virtual ~ClientAbstract(){};
 
@@ -191,10 +193,20 @@ class ClientAbstract{
       obj_idn_ = new_id;
     }
 
-    virtual void UpdateEntryIds(uint8_t new_id){}
+    void UpdateEntryIds(uint8_t new_id){
+      if(entry_array_head != nullptr){
+        for(uint8_t entry = 0; entry < num_entries; entry++){
+          if(entry_array_head[entry] != nullptr){
+            entry_array_head[entry]->UpdateModuleId(new_id);
+          }
+        }
+      }
+    }
 
     const uint8_t type_idn_;
     uint8_t obj_idn_;
+    ClientEntryAbstract** entry_array_head;
+    uint8_t num_entries;
 };
 
 int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
