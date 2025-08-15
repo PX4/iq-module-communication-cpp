@@ -195,16 +195,11 @@ class ClientAbstract{
   int8_t ReadMsg(uint8_t* rx_data, uint8_t rx_length){
     uint8_t number_of_entries = GetNumberOfClientEntries();
     ClientEntryAbstract * client_array[number_of_entries];
-
     GetClientEntryList(client_array);
 
-    if(client_array != nullptr){
-      int8_t parse_result = ParseMsg(rx_data, rx_length, client_array, number_of_entries);
+    int8_t parse_result = ParseMsg(rx_data, rx_length, client_array, number_of_entries);
 
-      return parse_result;
-    }
-
-    return -1;
+    return parse_result;
   }
 
     void UpdateModuleId(uint8_t new_id){

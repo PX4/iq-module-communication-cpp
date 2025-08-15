@@ -86,23 +86,26 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
       *output_data_length = ifci_commands->num_cvs * 2 + 1;
     }
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubYCvi + 1;
-   }
-
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){
-    ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
-      &packed_command_, // 0
-      &telemetry_,     // 1
-      &throttle_cvi_,  // 2
-      &x_cvi_,         // 3
-      &y_cvi_          // 4
-    };
-
-    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
-      client_entries[entry] = entry_array[entry];
+    uint16_t GetNumberOfClientEntries(){
+      return kSubYCvi + 1;
     }
-  }
+
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+
+      uint16_t num_entries = GetNumberOfClientEntries();
+
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &packed_command_, // 0
+        &telemetry_,     // 1
+        &throttle_cvi_,  // 2
+        &x_cvi_,         // 3
+        &y_cvi_          // 4
+      };
+
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubPackedCommand   = 0;

@@ -44,28 +44,28 @@ class BuzzerControlClient: public ClientAbstract{
     ClientEntry<uint8_t>  volume_;
     ClientEntry<uint16_t> duration_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    // {
-    //   static const uint8_t kEntryLength = kSubDuration+1;
-    //   ClientEntryAbstract* entry_array[kEntryLength] = {
-    //     &ctrl_mode_,  // 0
-    //     &ctrl_brake_, // 1
-    //     &ctrl_coast_, // 2
-    //     &ctrl_note_,  // 3
-    //     &volume_max_, // 4
-    //     &hz_,         // 5
-    //     &volume_,     // 6
-    //     &duration_,   // 7
-    //   };
+    uint16_t GetNumberOfClientEntries(){
+      return kSubDuration + 1;
+    }
 
-    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubDuration + 1;
-   }
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &ctrl_mode_,  // 0
+        &ctrl_brake_, // 1
+        &ctrl_coast_, // 2
+        &ctrl_note_,  // 3
+        &volume_max_, // 4
+        &hz_,         // 5
+        &volume_,     // 6
+        &duration_,   // 7
+      };
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
   private:
     static const uint8_t kSubCtrlMode   = 0;

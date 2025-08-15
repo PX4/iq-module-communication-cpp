@@ -50,31 +50,31 @@ class AnticoggingProClient: public ClientAbstract{
     ClientEntry<float>    amplitude_;
     ClientEntry<uint8_t>  max_harmonics_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    // {
-    //   static const uint8_t kEntryLength = kSubMaxHarmonics+1;
-    //   ClientEntryAbstract* entry_array[kEntryLength] = {
-    //     &enabled_,           // 0
-    //     &tau_,               // 1
-    //     &num_harmonics_,     // 2
-    //     &voltage_,           // 3
-    //     &index_,             // 4
-    //     &harmonic_,          // 5
-    //     &a_,                 // 6
-    //     &phase_,             // 7
-    //     &phase_total_,       // 8
-    //     &amplitude_,         // 9
-    //     &max_harmonics_      // 10
-    //   };
+    uint16_t GetNumberOfClientEntries(){
+      return kSubMaxHarmonics + 1;
+    }
 
-    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubMaxHarmonics + 1;
-   }
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &enabled_,           // 0
+        &tau_,               // 1
+        &num_harmonics_,     // 2
+        &voltage_,           // 3
+        &index_,             // 4
+        &harmonic_,          // 5
+        &a_,                 // 6
+        &phase_,             // 7
+        &phase_total_,       // 8
+        &amplitude_,         // 9
+        &max_harmonics_      // 10
+      };
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
   private:
     static const uint8_t kSubEnabled       = 0;

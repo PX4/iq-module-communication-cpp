@@ -57,33 +57,35 @@ class PowerSafetyClient : public ClientAbstract {
     ClientEntry<float> temperature_coil_low_;
     ClientEntry<float> temperature_coil_high_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-    //     static const uint8_t kEntryLength              = kSubTemperatureCoilHigh + 1;
-    //     ClientEntryAbstract* entry_array[kEntryLength] = {
-    //         &fault_now_,              // 0
-    //         &fault_ever_,             // 1
-    //         &fault_latching_,         // 2
-    //         &volt_input_low_,         // 3
-    //         &volt_input_high_,        // 4
-    //         &vref_int_low_,           // 5
-    //         &vref_int_high_,          // 6
-    //         &current_input_low_,      // 7
-    //         &current_input_high_,     // 8
-    //         &motor_current_low_,      // 9
-    //         &motor_current_high_,     // 10
-    //         &temperature_uc_low_,     // 11
-    //         &temperature_uc_high_,    // 12
-    //         &temperature_coil_low_,   // 13
-    //         &temperature_coil_high_,  // 14
-    //     };
-    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    uint16_t GetNumberOfClientEntries(){
+      return kSubTemperatureCoilHigh + 1;
+    }
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubTemperatureCoilHigh + 1;
-   }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &fault_now_,              // 0
+        &fault_ever_,             // 1
+        &fault_latching_,         // 2
+        &volt_input_low_,         // 3
+        &volt_input_high_,        // 4
+        &vref_int_low_,           // 5
+        &vref_int_high_,          // 6
+        &current_input_low_,      // 7
+        &current_input_high_,     // 8
+        &motor_current_low_,      // 9
+        &motor_current_high_,     // 10
+        &temperature_uc_low_,     // 11
+        &temperature_uc_high_,    // 12
+        &temperature_coil_low_,   // 13
+        &temperature_coil_high_,  // 14
+      };
+
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubFaultNow            = 0;

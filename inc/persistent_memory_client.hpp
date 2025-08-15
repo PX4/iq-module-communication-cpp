@@ -37,25 +37,24 @@ class PersistentMemoryClient: public ClientAbstract{
     ClientEntry<uint32_t>  format_key_1_;
     ClientEntry<uint32_t>  format_key_2_;
 
+    uint16_t GetNumberOfClientEntries(){
+      return kSubFormatKey2 + 1;
+    }
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    // {
-    //   static const uint8_t kEntryLength = kSubFormatKey2+1;
-    //   ClientEntryAbstract* entry_array[kEntryLength] = {
-    //     &erase_,             // 0
-    //     &revert_to_default_, // 1
-    //     &format_key_1_,      // 2
-    //     &format_key_2_       // 3
-    //   };
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &erase_,             // 0
+        &revert_to_default_, // 1
+        &format_key_1_,      // 2
+        &format_key_2_       // 3
+      };
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubFormatKey2 + 1;
-   }
-
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
   private:
     static const uint8_t kSubErase            = 0;

@@ -33,21 +33,23 @@ class PwmInterfaceClient : public ClientAbstract {
     ClientEntry<uint8_t> duty_cycle_;
     ClientEntry<uint8_t> pwm_mode_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-    //     static const uint8_t kEntryLength              = kSubPwmMode + 1;
-    //     ClientEntryAbstract* entry_array[kEntryLength] = {
-    //         &pwm_frequency_,  // 0
-    //         &duty_cycle_,     // 1
-    //         &pwm_mode_        // 2
-    //     };
-    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    uint16_t GetNumberOfClientEntries(){
+      return kSubPwmMode + 1;
+    }
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubPwmMode + 1;
-   }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      ClientEntryAbstract* entry_array[num_entries] = {
+          &pwm_frequency_,  // 0
+          &duty_cycle_,     // 1
+          &pwm_mode_        // 2
+      };
+
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubPwmFrequency = 0;
