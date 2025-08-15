@@ -212,13 +212,15 @@ class ClientAbstract{
     }
 
     void UpdateEntryIds(uint8_t new_id){
-      // if(entry_array_head != nullptr){
-      //   for(uint8_t entry = 0; entry < num_entries; entry++){
-      //     if(entry_array_head[entry] != nullptr){
-      //       entry_array_head[entry]->UpdateModuleId(new_id);
-      //     }
-      //   }
-      // }
+      uint8_t number_of_entries = GetNumberOfClientEntries();
+      ClientEntryAbstract * client_array[number_of_entries];
+      GetClientEntryList(client_array);
+
+      for(uint8_t entry = 0; entry < number_of_entries; entry++){
+        if(client_array[entry] != nullptr){
+          client_array[entry]->UpdateModuleId(new_id);
+        }
+      }
     }
 
     virtual uint16_t GetNumberOfClientEntries() = 0;
