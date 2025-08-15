@@ -8,9 +8,9 @@
 
 /*
   Name: mag_alpha_client.hpp
-  Last update: 2023/06/29 by Ben Quan 
-  Author: Ben Quan 
-  Contributors: 
+  Last update: 2023/06/29 by Ben Quan
+  Author: Ben Quan
+  Contributors:
 */
 
 #ifndef MAG_ALPHA_CLIENT_HPP
@@ -40,26 +40,32 @@ class MagAlphaClient: public ClientAbstract{
     ClientEntry<uint8_t>     alarm_;
     ClientEntry<uint8_t>     mght_;
     ClientEntry<uint8_t>     mglt_;
-    ClientEntry<uint16_t>    reg_val_;  
+    ClientEntry<uint16_t>    reg_val_;
     ClientEntry<uint16_t>    reg_adr_;
-    ClientEntryVoid          reg_str_;         
+    ClientEntryVoid          reg_str_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubRegStr+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &angle_raw_,    // 0
-        &angle_rad_,    // 1
-        &alarm_,        // 2
-        &mght_,         // 3
-        &mglt_,         // 4
-        &reg_val_,      // 5
-        &reg_adr_,      // 6
-        &reg_str_       // 7
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubRegStr+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &angle_raw_,    // 0
+    //     &angle_rad_,    // 1
+    //     &alarm_,        // 2
+    //     &mght_,         // 3
+    //     &mglt_,         // 4
+    //     &reg_val_,      // 5
+    //     &reg_adr_,      // 6
+    //     &reg_str_       // 7
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubRegStr + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubAngleRaw    = 0;

@@ -72,33 +72,68 @@ class PropellerMotorControlClient : public ClientAbstract {
     ClientEntry<uint8_t> timeout_behavior_;
     ClientEntry<uint8_t> timeout_song_option_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubTimeoutSongOption + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &ctrl_mode_,           // 0
-            &ctrl_brake_,          // 1
-            &ctrl_coast_,          // 2
-            &ctrl_pwm_,            // 3
-            &ctrl_volts_,          // 4
-            &ctrl_velocity_,       // 5
-            &ctrl_thrust_,         // 6
-            &velocity_kp_,         // 7
-            &velocity_ki_,         // 8
-            &velocity_kd_,         // 9
-            &velocity_ff0_,        // 10
-            &velocity_ff1_,        // 11
-            &velocity_ff2_,        // 12
-            &propeller_kt_pos_,    // 13
-            &propeller_kt_neg_,    // 14
-            &timeout_,             // 15
-            &input_filter_fc_,     // 16
-            &timeout_meaning_,     // 17
-            &timeout_behavior_,    // 18
-            &timeout_song_option_  // 19
-        };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubTimeoutSongOption + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         &ctrl_mode_,           // 0
+    //         &ctrl_brake_,          // 1
+    //         &ctrl_coast_,          // 2
+    //         &ctrl_pwm_,            // 3
+    //         &ctrl_volts_,          // 4
+    //         &ctrl_velocity_,       // 5
+    //         &ctrl_thrust_,         // 6
+    //         &velocity_kp_,         // 7
+    //         &velocity_ki_,         // 8
+    //         &velocity_kd_,         // 9
+    //         &velocity_ff0_,        // 10
+    //         &velocity_ff1_,        // 11
+    //         &velocity_ff2_,        // 12
+    //         &propeller_kt_pos_,    // 13
+    //         &propeller_kt_neg_,    // 14
+    //         &timeout_,             // 15
+    //         &input_filter_fc_,     // 16
+    //         &timeout_meaning_,     // 17
+    //         &timeout_behavior_,    // 18
+    //         &timeout_song_option_  // 19
+    //     };
 
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubTimeoutSongOption + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){
+    ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
+        &ctrl_mode_,           // 0
+        &ctrl_brake_,          // 1
+        &ctrl_coast_,          // 2
+        &ctrl_pwm_,            // 3
+        &ctrl_volts_,          // 4
+        &ctrl_velocity_,       // 5
+        &ctrl_thrust_,         // 6
+        &velocity_kp_,         // 7
+        &velocity_ki_,         // 8
+        &velocity_kd_,         // 9
+        &velocity_ff0_,        // 10
+        &velocity_ff1_,        // 11
+        &velocity_ff2_,        // 12
+        &propeller_kt_pos_,    // 13
+        &propeller_kt_neg_,    // 14
+        &timeout_,             // 15
+        &input_filter_fc_,     // 16
+        &timeout_meaning_,     // 17
+        &timeout_behavior_,    // 18
+        &timeout_song_option_  // 19
+    };
+
+    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
+      client_entries[entry] = entry_array[entry];
     }
+
+  }
+
 
    private:
     static const uint8_t kSubCtrlMode          = 0;

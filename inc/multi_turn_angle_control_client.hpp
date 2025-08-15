@@ -98,45 +98,51 @@ class MultiTurnAngleControlClient : public ClientAbstract {
     ClientEntryVoid sample_zero_angle_;
     ClientEntry<float> zero_angle_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubZeroAngle + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &ctrl_mode_,                        // 0
-            &ctrl_brake_,                       // 1
-            &ctrl_coast_,                       // 2
-            &ctrl_angle_,                       // 3
-            &ctrl_velocity_,                    // 4
-            &angle_Kp_,                         // 5
-            &angle_Ki_,                         // 6
-            &angle_Kd_,                         // 7
-            &timeout_,                          // 8
-            &ctrl_pwm_,                         // 9
-            &ctrl_volts_,                       // 10
-            &obs_angular_displacement_,         // 11
-            &obs_angular_velocity_,             // 12
-            &meter_per_rad_,                    // 13
-            &ctrl_linear_displacement_,         // 14
-            &ctrl_linear_velocity_,             // 15
-            &obs_linear_displacement_,          // 16
-            &obs_linear_velocity_,              // 17
-            &angular_speed_max_,                // 18
-            &trajectory_angular_displacement_,  // 19
-            &trajectory_angular_velocity_,      // 20
-            &trajectory_angular_acceleration_,  // 21
-            &trajectory_duration_,              // 22
-            &trajectory_linear_displacement_,   // 23
-            &trajectory_linear_velocity_,       // 24
-            &trajectory_linear_acceleration_,   // 25
-            &trajectory_average_speed_,         // 26
-            &trajectory_queue_mode_,            // 27
-            nullptr,                            // 28
-            &ff_,                               // 29
-            &sample_zero_angle_,                // 30
-            &zero_angle_                        // 31
-        };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubZeroAngle + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         &ctrl_mode_,                        // 0
+    //         &ctrl_brake_,                       // 1
+    //         &ctrl_coast_,                       // 2
+    //         &ctrl_angle_,                       // 3
+    //         &ctrl_velocity_,                    // 4
+    //         &angle_Kp_,                         // 5
+    //         &angle_Ki_,                         // 6
+    //         &angle_Kd_,                         // 7
+    //         &timeout_,                          // 8
+    //         &ctrl_pwm_,                         // 9
+    //         &ctrl_volts_,                       // 10
+    //         &obs_angular_displacement_,         // 11
+    //         &obs_angular_velocity_,             // 12
+    //         &meter_per_rad_,                    // 13
+    //         &ctrl_linear_displacement_,         // 14
+    //         &ctrl_linear_velocity_,             // 15
+    //         &obs_linear_displacement_,          // 16
+    //         &obs_linear_velocity_,              // 17
+    //         &angular_speed_max_,                // 18
+    //         &trajectory_angular_displacement_,  // 19
+    //         &trajectory_angular_velocity_,      // 20
+    //         &trajectory_angular_acceleration_,  // 21
+    //         &trajectory_duration_,              // 22
+    //         &trajectory_linear_displacement_,   // 23
+    //         &trajectory_linear_velocity_,       // 24
+    //         &trajectory_linear_acceleration_,   // 25
+    //         &trajectory_average_speed_,         // 26
+    //         &trajectory_queue_mode_,            // 27
+    //         nullptr,                            // 28
+    //         &ff_,                               // 29
+    //         &sample_zero_angle_,                // 30
+    //         &zero_angle_                        // 31
+    //     };
 
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubZeroAngle + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
    private:
     static const uint8_t kSubCtrlMode                      = 0;

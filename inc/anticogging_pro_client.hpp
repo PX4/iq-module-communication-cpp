@@ -8,9 +8,9 @@
 
 /*
   Name: anticogging_pro_client.hpp
-  Last update: 2023/06/29 by Ben Quan 
-  Author: Ben Quan 
-  Contributors: 
+  Last update: 2023/06/29 by Ben Quan
+  Author: Ben Quan
+  Contributors:
 */
 
 #ifndef ANTICOGGING_PRO_CLIENT_HPP
@@ -38,37 +38,43 @@ class AnticoggingProClient: public ClientAbstract{
       {};
 
     // Client Entries
-    ClientEntry<uint8_t>  enabled_;      
-    ClientEntry<float>    tau_;          
+    ClientEntry<uint8_t>  enabled_;
+    ClientEntry<float>    tau_;
     ClientEntry<uint8_t>  num_harmonics_;
-    ClientEntry<float>    voltage_;      
-    ClientEntry<uint8_t>  index_;        
-    ClientEntry<uint8_t>  harmonic_;     
-    ClientEntry<float>    a_;            
-    ClientEntry<float>    phase_;        
-    ClientEntry<float>    phase_total_;  
-    ClientEntry<float>    amplitude_;    
+    ClientEntry<float>    voltage_;
+    ClientEntry<uint8_t>  index_;
+    ClientEntry<uint8_t>  harmonic_;
+    ClientEntry<float>    a_;
+    ClientEntry<float>    phase_;
+    ClientEntry<float>    phase_total_;
+    ClientEntry<float>    amplitude_;
     ClientEntry<uint8_t>  max_harmonics_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubMaxHarmonics+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &enabled_,           // 0
-        &tau_,               // 1
-        &num_harmonics_,     // 2
-        &voltage_,           // 3
-        &index_,             // 4
-        &harmonic_,          // 5
-        &a_,                 // 6
-        &phase_,             // 7
-        &phase_total_,       // 8
-        &amplitude_,         // 9
-        &max_harmonics_      // 10
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubMaxHarmonics+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &enabled_,           // 0
+    //     &tau_,               // 1
+    //     &num_harmonics_,     // 2
+    //     &voltage_,           // 3
+    //     &index_,             // 4
+    //     &harmonic_,          // 5
+    //     &a_,                 // 6
+    //     &phase_,             // 7
+    //     &phase_total_,       // 8
+    //     &amplitude_,         // 9
+    //     &max_harmonics_      // 10
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubMaxHarmonics + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubEnabled       = 0;

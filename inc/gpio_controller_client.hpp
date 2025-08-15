@@ -49,23 +49,29 @@ class GpioControllerClient : public ClientAbstract {
     ClientEntry<uint8_t> addressable_pull_type_;             // 9
     ClientEntry<uint8_t> addressable_push_pull_open_drain_;  // 10
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubAddressablePushPullOpenDrain + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &mode_register_,                    // 0
-            &inputs_register_,                  // 1
-            &outputs_register_,                 // 2
-            &use_pull_register_,                // 3
-            &pull_type_register_,               // 4
-            &push_pull_open_drain_register_,    // 5
-            &addressable_gpio_mode_,            // 6
-            &addressable_outputs_,              // 7
-            &addressable_use_pull_,             // 8
-            &addressable_pull_type_,            // 9
-            &addressable_push_pull_open_drain_  // 10
-        };
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubAddressablePushPullOpenDrain + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         &mode_register_,                    // 0
+    //         &inputs_register_,                  // 1
+    //         &outputs_register_,                 // 2
+    //         &use_pull_register_,                // 3
+    //         &pull_type_register_,               // 4
+    //         &push_pull_open_drain_register_,    // 5
+    //         &addressable_gpio_mode_,            // 6
+    //         &addressable_outputs_,              // 7
+    //         &addressable_use_pull_,             // 8
+    //         &addressable_pull_type_,            // 9
+    //         &addressable_push_pull_open_drain_  // 10
+    //     };
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubAddressablePushPullOpenDrain + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
    private:
     static const uint8_t kSubModeRegister                 = 0;

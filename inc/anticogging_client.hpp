@@ -38,19 +38,25 @@ class AnticoggingClient: public ClientAbstract{
     ClientEntryVoid erase_;
     ClientEntry<uint8_t> left_shift_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubLeftShift+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &table_size_,     // 0
-        &is_data_valid_,  // 1
-        &is_enabled_,     // 2
-        &erase_,          // 3
-        &left_shift_      // 4
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubLeftShift+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &table_size_,     // 0
+    //     &is_data_valid_,  // 1
+    //     &is_enabled_,     // 2
+    //     &erase_,          // 3
+    //     &left_shift_      // 4
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubLeftShift + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubTableSize    = 0;

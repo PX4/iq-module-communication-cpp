@@ -79,39 +79,45 @@ class SystemControlClient : public ClientAbstract {
     ClientEntry<uint32_t> control_flags_;
     ClientEntry<uint32_t> pcb_version_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubPcbVersion + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &reboot_program_,        // 0
-            &reboot_boot_loader_,    // 1
-            &dev_id_,                // 2
-            &rev_id_,                // 3
-            &uid1_,                  // 4
-            &uid2_,                  // 5
-            &uid3_,                  // 6
-            &mem_size_,              // 7
-            &build_year_,            // 8
-            &build_month_,           // 9
-            &build_day_,             // 10
-            &build_hour_,            // 11
-            &build_minute_,          // 12
-            &build_second_,          // 13
-            &module_id_,             // 14
-            &time_,                  // 15
-            &firmware_version_,      // 16
-            &hardware_version_,      // 17
-            &electronics_version_,   // 18
-            &firmware_valid_,        // 19
-            &applications_present_,  // 20
-            &bootloader_version_,    // 21
-            &upgrade_version_,       // 22
-            &system_clock_,          // 23
-            &control_flags_,         // 24
-            &pcb_version_            // 25
-        };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubPcbVersion + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         &reboot_program_,        // 0
+    //         &reboot_boot_loader_,    // 1
+    //         &dev_id_,                // 2
+    //         &rev_id_,                // 3
+    //         &uid1_,                  // 4
+    //         &uid2_,                  // 5
+    //         &uid3_,                  // 6
+    //         &mem_size_,              // 7
+    //         &build_year_,            // 8
+    //         &build_month_,           // 9
+    //         &build_day_,             // 10
+    //         &build_hour_,            // 11
+    //         &build_minute_,          // 12
+    //         &build_second_,          // 13
+    //         &module_id_,             // 14
+    //         &time_,                  // 15
+    //         &firmware_version_,      // 16
+    //         &hardware_version_,      // 17
+    //         &electronics_version_,   // 18
+    //         &firmware_valid_,        // 19
+    //         &applications_present_,  // 20
+    //         &bootloader_version_,    // 21
+    //         &upgrade_version_,       // 22
+    //         &system_clock_,          // 23
+    //         &control_flags_,         // 24
+    //         &pcb_version_            // 25
+    //     };
 
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubPcbVersion + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
    private:
     static const uint8_t kSubRebootProgram       = 0;

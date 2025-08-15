@@ -28,17 +28,23 @@ class WhiteLedClient : public ClientAbstract {
 	ClientEntry<float> strobe_period_;
 	ClientEntry<uint32_t> strobe_pattern_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubStrobePattern + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-			&intensity_,        // 0
-			&strobe_active_,    // 1
-			&strobe_period_,    // 2
-			&strobe_pattern_    // 3
-        };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubStrobePattern + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+		// 	&intensity_,        // 0
+		// 	&strobe_active_,    // 1
+		// 	&strobe_period_,    // 2
+		// 	&strobe_pattern_    // 3
+    //     };
 
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubStrobePattern + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
    private:
     static const uint8_t kSubIntensity        = 0;

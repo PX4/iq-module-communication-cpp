@@ -53,26 +53,32 @@ class PowerMonitorClient: public ClientAbstract{
     ClientEntry<float>      amps_gain_;
     ClientEntry<float>      amps_bias_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubAmpsBias+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &volts_,        // 0
-        &amps_,         // 1
-        &watts_,        // 2
-        &joules_,       // 3
-        &reset_joules_, // 4
-        &filter_fs_,    // 5
-        &filter_fc_,    // 6
-        &volts_raw_,    // 7
-        &amps_raw_,     // 8
-        &volts_gain_,   // 9
-        &amps_gain_,    // 10
-        &amps_bias_    // 11
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubAmpsBias+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &volts_,        // 0
+    //     &amps_,         // 1
+    //     &watts_,        // 2
+    //     &joules_,       // 3
+    //     &reset_joules_, // 4
+    //     &filter_fs_,    // 5
+    //     &filter_fc_,    // 6
+    //     &volts_raw_,    // 7
+    //     &amps_raw_,     // 8
+    //     &volts_gain_,   // 9
+    //     &amps_gain_,    // 10
+    //     &amps_bias_    // 11
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubAmpsBias + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubVolts        =  0;

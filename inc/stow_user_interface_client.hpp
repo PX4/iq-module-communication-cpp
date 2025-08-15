@@ -49,23 +49,29 @@ class StowUserInterfaceClient : public ClientAbstract {
     ClientEntry<uint8_t> stow_status_;
     ClientEntry<uint8_t> stow_result_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubStowResult + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &zero_angle_,           // 0
-            &target_angle_,         // 1
-            &target_acceleration_,  // 2
-            &sample_zero_,          // 3
-            &user_stow_request_,    // 4
-            &stow_kp_,              // 5
-            &stow_ki_,              // 6
-            &stow_kd_,              // 7
-            &hold_stow_,            // 8
-            &stow_status_,          // 9
-            &stow_result_           // 10
-        };
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubStowResult + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         &zero_angle_,           // 0
+    //         &target_angle_,         // 1
+    //         &target_acceleration_,  // 2
+    //         &sample_zero_,          // 3
+    //         &user_stow_request_,    // 4
+    //         &stow_kp_,              // 5
+    //         &stow_ki_,              // 6
+    //         &stow_kd_,              // 7
+    //         &hold_stow_,            // 8
+    //         &stow_status_,          // 9
+    //         &stow_result_           // 10
+    //     };
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubStowResult + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
    private:
     static const uint8_t kSubZeroAngle          = 0;

@@ -36,9 +36,10 @@ int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
         if(entry_array[sub_idn]->type_idn_ == type_idn &&
         entry_array[sub_idn]->obj_idn_ == obj_idn)
         {
-          // ... then we have a valid message
-          entry_array[sub_idn]->Reply(&rx_data[3],rx_length-3);
-          return 1; // I parsed something
+          return 1;
+      //     // ... then we have a valid message
+      //     entry_array[sub_idn]->Reply(&rx_data[3],rx_length-3);
+      //     return 1; // I parsed something
         }
       }
     }
