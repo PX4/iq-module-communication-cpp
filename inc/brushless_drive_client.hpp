@@ -48,11 +48,11 @@ class BrushlessDriveClient: public ClientAbstract{
       drive_volts_addition_(            kTypeBrushlessDrive, obj_idn, kSubDriveVoltsAddition),
       angle_adjust_enable_(             kTypeBrushlessDrive, obj_idn, kSubAngleAdjustEnable),
       motor_emf_calc_(                  kTypeBrushlessDrive, obj_idn, kSubMotorEmfCalc),
-      angle_adjustment_(                kTypeBrushlessDrive, obj_idn, kSubAngleAdjustment), 
-      angle_adjust_max_(                kTypeBrushlessDrive, obj_idn, kSubAngleAdjustMax),   
-      angle_adjust_kp_(                 kTypeBrushlessDrive, obj_idn, kSubAngleAdjustKp),    
-      angle_adjust_ki_(                 kTypeBrushlessDrive, obj_idn, kSubAngleAdjustKi),    
-      v_max_start_(                     kTypeBrushlessDrive, obj_idn, kSubVMaxStart),    
+      angle_adjustment_(                kTypeBrushlessDrive, obj_idn, kSubAngleAdjustment),
+      angle_adjust_max_(                kTypeBrushlessDrive, obj_idn, kSubAngleAdjustMax),
+      angle_adjust_kp_(                 kTypeBrushlessDrive, obj_idn, kSubAngleAdjustKp),
+      angle_adjust_ki_(                 kTypeBrushlessDrive, obj_idn, kSubAngleAdjustKi),
+      v_max_start_(                     kTypeBrushlessDrive, obj_idn, kSubVMaxStart),
       motor_Kv_(                        kTypeBrushlessDrive, obj_idn, kSubMotorKv),
       motor_R_ohm_(                     kTypeBrushlessDrive, obj_idn, kSubMotorROhm),
       motor_I_max_(                     kTypeBrushlessDrive, obj_idn, kSubMotorIMax),
@@ -63,22 +63,22 @@ class BrushlessDriveClient: public ClientAbstract{
       motor_redline_end_(               kTypeBrushlessDrive, obj_idn, kSubMotorRedlineEnd),
       motor_l_(                         kTypeBrushlessDrive, obj_idn, kSubMotorL),
       derate_(                          kTypeBrushlessDrive, obj_idn, kSubDerate),
-      motor_i_soft_start_(              kTypeBrushlessDrive, obj_idn, kSubMotorISoftStart),            
-      motor_i_soft_end_(                kTypeBrushlessDrive, obj_idn, kSubMotorISoftEnd),             
-      emf_(                             kTypeBrushlessDrive, obj_idn, kSubEmf),                       
-      volts_at_max_amps_(               kTypeBrushlessDrive, obj_idn, kSubVoltsAtMaxAmps),            
-      slew_volts_per_second_(           kTypeBrushlessDrive, obj_idn, kSubSlewVoltsPerSecond),        
-      slew_enable_(                     kTypeBrushlessDrive, obj_idn, kSubSlewEnable),                
+      motor_i_soft_start_(              kTypeBrushlessDrive, obj_idn, kSubMotorISoftStart),
+      motor_i_soft_end_(                kTypeBrushlessDrive, obj_idn, kSubMotorISoftEnd),
+      emf_(                             kTypeBrushlessDrive, obj_idn, kSubEmf),
+      volts_at_max_amps_(               kTypeBrushlessDrive, obj_idn, kSubVoltsAtMaxAmps),
+      slew_volts_per_second_(           kTypeBrushlessDrive, obj_idn, kSubSlewVoltsPerSecond),
+      slew_enable_(                     kTypeBrushlessDrive, obj_idn, kSubSlewEnable),
       motoring_supply_current_limit_(   kTypeBrushlessDrive, obj_idn, kSubMotoringSupplyCurrentLimit),
       regen_supply_current_limit_(      kTypeBrushlessDrive, obj_idn, kSubRegenSupplyCurrentLimit),
       supply_current_limit_enable_(     kTypeBrushlessDrive, obj_idn, kSubSupplyCurrentLimitEnable),
-      regen_limiting_(                  kTypeBrushlessDrive, obj_idn, kSubRegenLimiting),             
-      regen_limit_adjust_(              kTypeBrushlessDrive, obj_idn, kSubRegenLimitAdjust),          
-      motoring_limiting_(               kTypeBrushlessDrive, obj_idn, kSubMotoringLimiting),          
+      regen_limiting_(                  kTypeBrushlessDrive, obj_idn, kSubRegenLimiting),
+      regen_limit_adjust_(              kTypeBrushlessDrive, obj_idn, kSubRegenLimitAdjust),
+      motoring_limiting_(               kTypeBrushlessDrive, obj_idn, kSubMotoringLimiting),
       motoring_limit_adjust_(           kTypeBrushlessDrive, obj_idn, kSubMotoringLimitAdjust),
       regen_limit_kp_(                  kTypeBrushlessDrive, obj_idn, kSubRegenLimitKp),
-      regen_limit_ki_(                  kTypeBrushlessDrive, obj_idn, kSubRegenLimitKi),              
-      regen_limit_max_(                 kTypeBrushlessDrive, obj_idn, kSubRegenLimitMax),             
+      regen_limit_ki_(                  kTypeBrushlessDrive, obj_idn, kSubRegenLimitKi),
+      regen_limit_max_(                 kTypeBrushlessDrive, obj_idn, kSubRegenLimitMax),
       motoring_limit_kp_(               kTypeBrushlessDrive, obj_idn, kSubMotoringLimitKp),
       motoring_limit_ki_(               kTypeBrushlessDrive, obj_idn, kSubMotoringLimitKi),
       motoring_limit_max_(              kTypeBrushlessDrive, obj_idn, kSubMotoringLimitMax)
@@ -107,13 +107,13 @@ class BrushlessDriveClient: public ClientAbstract{
     ClientEntry<uint32_t>   commutation_hz_;
     ClientEntry<float>      phase_angle_;
     ClientEntry<float>      drive_volts_addition_;
-    ClientEntry<uint8_t>    angle_adjust_enable_; 
-    ClientEntry<float>      motor_emf_calc_;      
-    ClientEntry<float>      angle_adjustment_;    
-    ClientEntry<float>      angle_adjust_max_;    
-    ClientEntry<float>      angle_adjust_kp_;     
-    ClientEntry<float>      angle_adjust_ki_;        
-    ClientEntry<float>      v_max_start_;        
+    ClientEntry<uint8_t>    angle_adjust_enable_;
+    ClientEntry<float>      motor_emf_calc_;
+    ClientEntry<float>      angle_adjustment_;
+    ClientEntry<float>      angle_adjust_max_;
+    ClientEntry<float>      angle_adjust_kp_;
+    ClientEntry<float>      angle_adjust_ki_;
+    ClientEntry<float>      v_max_start_;
     ClientEntry<float>      motor_Kv_;
     ClientEntry<float>      motor_R_ohm_;
     ClientEntry<float>      motor_I_max_;
@@ -145,75 +145,81 @@ class BrushlessDriveClient: public ClientAbstract{
     ClientEntry<float>      motoring_limit_max_;
 
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubMotoringLimitMax+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &drive_mode_,                       // 0
-        &drive_phase_pwm_,                  // 1
-        &drive_phase_volts_,                // 2
-        &drive_spin_pwm_,                   // 3
-        &drive_spin_volts_,                 // 4
-        &drive_brake_,                      // 5
-        &drive_coast_,                      // 6
-        &drive_angle_offset_,               // 7
-        &drive_pwm_,                        // 8
-        &drive_volts_,                      // 9
-        &mech_lead_angle_,                  // 10
-        &obs_supply_volts_,                 // 11
-        &obs_angle_,                        // 12
-        &obs_velocity_,                     // 13
-        &motor_pole_pairs_,                 // 14
-        &motor_emf_shape_,                  // 15
-        &permute_wires_,                    // 16
-        &calibration_angle_,                // 17
-        &lead_time_,                        // 18
-        &commutation_hz_,                   // 19
-        &phase_angle_,                      // 20
-        &drive_volts_addition_,             // 21
-        &angle_adjust_enable_,              // 22
-        &motor_emf_calc_,                   // 23
-        &angle_adjustment_,                 // 24
-        &angle_adjust_max_,                 // 25
-        &angle_adjust_kp_,                  // 26
-        &angle_adjust_ki_,                  // 27
-        nullptr,                            // 28
-        &v_max_start_,                      // 29
-        nullptr,                            // 30
-        nullptr,                            // 31
-        &motor_Kv_,                         // 32
-        &motor_R_ohm_,                      // 33
-        &motor_I_max_,                      // 34
-        &volts_limit_,                      // 35
-        &est_motor_amps_,                   // 36
-        &est_motor_torque_,                 // 37
-        &motor_redline_start_,              // 38
-        &motor_redline_end_,                // 39
-        &motor_l_,                          // 40
-        &derate_,                           // 41
-        &motor_i_soft_start_,               // 42 
-        &motor_i_soft_end_,                 // 43 
-        &emf_,                              // 44 
-        &volts_at_max_amps_,                // 45   
-        &slew_volts_per_second_,            // 46 
-        &slew_enable_,                      // 47 
-        &motoring_supply_current_limit_,    // 48
-        &regen_supply_current_limit_,       // 49
-        &supply_current_limit_enable_,      // 50
-        &regen_limiting_,                   // 51
-        &regen_limit_adjust_,               // 52
-        &motoring_limiting_,                // 53
-        &motoring_limit_adjust_,            // 54
-        &regen_limit_kp_,                   // 55
-        &regen_limit_ki_,                   // 56
-        &regen_limit_max_,                  // 57
-        &motoring_limit_kp_,                // 58
-        &motoring_limit_ki_,                // 59
-        &motoring_limit_max_                // 60
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubMotoringLimitMax+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &drive_mode_,                       // 0
+    //     &drive_phase_pwm_,                  // 1
+    //     &drive_phase_volts_,                // 2
+    //     &drive_spin_pwm_,                   // 3
+    //     &drive_spin_volts_,                 // 4
+    //     &drive_brake_,                      // 5
+    //     &drive_coast_,                      // 6
+    //     &drive_angle_offset_,               // 7
+    //     &drive_pwm_,                        // 8
+    //     &drive_volts_,                      // 9
+    //     &mech_lead_angle_,                  // 10
+    //     &obs_supply_volts_,                 // 11
+    //     &obs_angle_,                        // 12
+    //     &obs_velocity_,                     // 13
+    //     &motor_pole_pairs_,                 // 14
+    //     &motor_emf_shape_,                  // 15
+    //     &permute_wires_,                    // 16
+    //     &calibration_angle_,                // 17
+    //     &lead_time_,                        // 18
+    //     &commutation_hz_,                   // 19
+    //     &phase_angle_,                      // 20
+    //     &drive_volts_addition_,             // 21
+    //     &angle_adjust_enable_,              // 22
+    //     &motor_emf_calc_,                   // 23
+    //     &angle_adjustment_,                 // 24
+    //     &angle_adjust_max_,                 // 25
+    //     &angle_adjust_kp_,                  // 26
+    //     &angle_adjust_ki_,                  // 27
+    //     nullptr,                            // 28
+    //     &v_max_start_,                      // 29
+    //     nullptr,                            // 30
+    //     nullptr,                            // 31
+    //     &motor_Kv_,                         // 32
+    //     &motor_R_ohm_,                      // 33
+    //     &motor_I_max_,                      // 34
+    //     &volts_limit_,                      // 35
+    //     &est_motor_amps_,                   // 36
+    //     &est_motor_torque_,                 // 37
+    //     &motor_redline_start_,              // 38
+    //     &motor_redline_end_,                // 39
+    //     &motor_l_,                          // 40
+    //     &derate_,                           // 41
+    //     &motor_i_soft_start_,               // 42
+    //     &motor_i_soft_end_,                 // 43
+    //     &emf_,                              // 44
+    //     &volts_at_max_amps_,                // 45
+    //     &slew_volts_per_second_,            // 46
+    //     &slew_enable_,                      // 47
+    //     &motoring_supply_current_limit_,    // 48
+    //     &regen_supply_current_limit_,       // 49
+    //     &supply_current_limit_enable_,      // 50
+    //     &regen_limiting_,                   // 51
+    //     &regen_limit_adjust_,               // 52
+    //     &motoring_limiting_,                // 53
+    //     &motoring_limit_adjust_,            // 54
+    //     &regen_limit_kp_,                   // 55
+    //     &regen_limit_ki_,                   // 56
+    //     &regen_limit_max_,                  // 57
+    //     &motoring_limit_kp_,                // 58
+    //     &motoring_limit_ki_,                // 59
+    //     &motoring_limit_max_                // 60
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubMotoringLimitMax + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubDriveMode                  = 0;

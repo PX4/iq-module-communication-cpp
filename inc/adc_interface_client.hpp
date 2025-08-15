@@ -31,14 +31,20 @@ class AdcInterfaceClient : public ClientAbstract {
     ClientEntry<float> adc_voltage_;
     ClientEntry<uint16_t> raw_value_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubRawValue + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            &adc_voltage_,  // 0
-            &raw_value_     // 1
-        };
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubRawValue + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         &adc_voltage_,  // 0
+    //         &raw_value_     // 1
+    //     };
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubRawValue + 1;
+   }
+
+   void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
    private:
     static const uint8_t kSubAdcVoltage = 0;

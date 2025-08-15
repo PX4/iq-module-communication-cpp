@@ -177,42 +177,55 @@ class PackedClientEntry : public ClientEntryAbstract {
 
 };
 
+int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
+  ClientEntryAbstract** entry_array, uint8_t entry_length);
+
+int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
+  ClientEntryAbstract& entry);
+
 class ClientAbstract{
   public:
     ClientAbstract(uint8_t type_idn, uint8_t obj_idn):
       type_idn_(type_idn),
-      obj_idn_(obj_idn),
-      entry_array_head(nullptr),
-      num_entries(0) {};
+      obj_idn_(obj_idn)
+      {};
 
     virtual ~ClientAbstract(){};
 
-    virtual void ReadMsg(uint8_t* rx_data, uint8_t rx_length) = 0;
+  int8_t ReadMsg(uint8_t* rx_data, uint8_t rx_length){
+    uint8_t number_of_entries = GetNumberOfClientEntries();
+    ClientEntryAbstract * client_array[number_of_entries];
+
+    GetClientEntryList(client_array);
+
+    if(client_array != nullptr){
+      int8_t parse_result = ParseMsg(rx_data, rx_length, client_array, number_of_entries);
+
+      return parse_result;
+    }
+
+    return -1;
+  }
 
     void UpdateModuleId(uint8_t new_id){
       obj_idn_ = new_id;
     }
 
     void UpdateEntryIds(uint8_t new_id){
-      if(entry_array_head != nullptr){
-        for(uint8_t entry = 0; entry < num_entries; entry++){
-          if(entry_array_head[entry] != nullptr){
-            entry_array_head[entry]->UpdateModuleId(new_id);
-          }
-        }
-      }
+      // if(entry_array_head != nullptr){
+      //   for(uint8_t entry = 0; entry < num_entries; entry++){
+      //     if(entry_array_head[entry] != nullptr){
+      //       entry_array_head[entry]->UpdateModuleId(new_id);
+      //     }
+      //   }
+      // }
     }
+
+    virtual uint16_t GetNumberOfClientEntries() = 0;
+    virtual void GetClientEntryList(ClientEntryAbstract ** client_entries) = 0;
 
     const uint8_t type_idn_;
     uint8_t obj_idn_;
-    ClientEntryAbstract** entry_array_head;
-    uint8_t num_entries;
 };
-
-int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
-  ClientEntryAbstract** entry_array, uint8_t entry_length);
-
-int8_t ParseMsg(uint8_t* rx_data, uint8_t rx_length,
-  ClientEntryAbstract& entry);
 
 #endif // CLIENT_COMMUNICATION_H

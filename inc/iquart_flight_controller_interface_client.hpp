@@ -56,8 +56,6 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
           x_cvi_(kTypeIQUartFlightControllerInterface, obj_idn, kSubXCvi),
           y_cvi_(kTypeIQUartFlightControllerInterface, obj_idn, kSubYCvi)
           {
-            entry_array_head = entry_array;
-            num_entries = kEntryLength;
           };
 
     // Client Entries
@@ -66,10 +64,6 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
     ClientEntry<uint8_t> throttle_cvi_;
     ClientEntry<uint8_t> x_cvi_;
     ClientEntry<uint8_t> y_cvi_;
-
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
 
     /**
      * @brief This function takes in an IFCIPackedMessage struct, and prepares the data as a series of bytes ready for transmission over IQUART
@@ -92,21 +86,30 @@ class IQUartFlightControllerInterfaceClient : public ClientAbstract {
       *output_data_length = ifci_commands->num_cvs * 2 + 1;
     }
 
+   uint16_t GetNumberOfClientEntries(){
+	return kSubYCvi + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){
+    ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
+      &packed_command_, // 0
+      &telemetry_,     // 1
+      &throttle_cvi_,  // 2
+      &x_cvi_,         // 3
+      &y_cvi_          // 4
+    };
+
+    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
+      client_entries[entry] = entry_array[entry];
+    }
+  }
+
    private:
     static const uint8_t kSubPackedCommand   = 0;
     static const uint8_t kSubTelemetry       = 1;
     static const uint8_t kSubThrottleCvi     = 2;
     static const uint8_t kSubXCvi            = 3;
     static const uint8_t kSubYCvi            = 4;
-
-    static const uint8_t kEntryLength = kSubYCvi + 1;
-    ClientEntryAbstract* entry_array[kEntryLength] = {
-        &packed_command_, // 0
-        &telemetry_,     // 1
-        &throttle_cvi_,  // 2
-        &x_cvi_,         // 3
-        &y_cvi_          // 4
-    };
 };
 
 #endif /* IQUART_FLIGHT_CONTROLLER_INTERFACE_CLIENT_HPP_ */

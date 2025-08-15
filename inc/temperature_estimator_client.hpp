@@ -42,20 +42,26 @@ class TemperatureEstimatorClient: public ClientAbstract{
     ClientEntry<float>    thermal_capacitance_;
     ClientEntry<int32_t>  derate_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubDerate+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &temp_,               // 0
-        &otw_,                // 1
-        &otlo_,               // 2
-        &thermal_resistance_, // 3
-        &thermal_capacitance_,// 4
-        &derate_              // 5
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubDerate+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &temp_,               // 0
+    //     &otw_,                // 1
+    //     &otlo_,               // 2
+    //     &thermal_resistance_, // 3
+    //     &thermal_capacitance_,// 4
+    //     &derate_              // 5
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubDerate + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubTemp =               0;

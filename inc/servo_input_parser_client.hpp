@@ -35,17 +35,23 @@ class ServoInputParserClient: public ClientAbstract{
     ClientEntry<float>    unit_min_;
     ClientEntry<float>    unit_max_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    {
-      static const uint8_t kEntryLength = kSubUnitMax+1;
-      ClientEntryAbstract* entry_array[kEntryLength] = {
-        &mode_,     // 0
-        &unit_min_, // 1
-        &unit_max_  // 2
-      };
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
+    // {
+    //   static const uint8_t kEntryLength = kSubUnitMax+1;
+    //   ClientEntryAbstract* entry_array[kEntryLength] = {
+    //     &mode_,     // 0
+    //     &unit_min_, // 1
+    //     &unit_max_  // 2
+    //   };
 
-      ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubUnitMax + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
 
   private:
     static const uint8_t kSubMode =     0;

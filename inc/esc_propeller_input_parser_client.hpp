@@ -35,8 +35,6 @@ class EscPropellerInputParserClient : public ClientAbstract {
           zero_spin_throttle_(kTypeEscPropellerInputParser, obj_idn, kSubZeroSpinThrottle),
           zero_spin_tolerance_(kTypeEscPropellerInputParser, obj_idn, kSubZeroSpinTolerance)
           {
-            entry_array_head = entry_array;
-            num_entries = kEntryLength;
           };
 
     // Client Entries
@@ -52,24 +50,12 @@ class EscPropellerInputParserClient : public ClientAbstract {
     ClientEntry<float> zero_spin_throttle_;
     ClientEntry<float> zero_spin_tolerance_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    }
+   uint16_t GetNumberOfClientEntries(){
+	   return kSubZeroSpinTolerance + 1;
+   }
 
-   private:
-    static const uint8_t kSubMode              = 0;
-    static const uint8_t kSubRawValue          = 1;
-    static const uint8_t kSubSign              = 3;
-    static const uint8_t kSubVoltsMax          = 4;
-    static const uint8_t kSubVelocityMax       = 5;
-    static const uint8_t kSubThrustMax         = 6;
-    static const uint8_t kSubSafeFactor        = 7;
-    static const uint8_t kSubFlipNegative      = 8;
-    static const uint8_t kSubZeroSpinThrottle  = 9;
-    static const uint8_t kSubZeroSpinTolerance = 10;
-
-    static const uint8_t kEntryLength = kSubZeroSpinTolerance + 1;
-    ClientEntryAbstract* entry_array[kEntryLength] = {
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){
+    ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
         &mode_,                // 0
         &raw_value_,           // 1
         nullptr,               // 2
@@ -82,6 +68,23 @@ class EscPropellerInputParserClient : public ClientAbstract {
         &zero_spin_throttle_,  // 9
         &zero_spin_tolerance_  // 10
     };
+
+    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
+	    client_entries[entry] = entry_array[entry];
+    }
+  }
+
+   private:
+    static const uint8_t kSubMode              = 0;
+    static const uint8_t kSubRawValue          = 1;
+    static const uint8_t kSubSign              = 3;
+    static const uint8_t kSubVoltsMax          = 4;
+    static const uint8_t kSubVelocityMax       = 5;
+    static const uint8_t kSubThrustMax         = 6;
+    static const uint8_t kSubSafeFactor        = 7;
+    static const uint8_t kSubFlipNegative      = 8;
+    static const uint8_t kSubZeroSpinThrottle  = 9;
+    static const uint8_t kSubZeroSpinTolerance = 10;
 };
 
 #endif /* ESC_PROPELLER_INPUT_PARSER_CLIENT_HPP_ */

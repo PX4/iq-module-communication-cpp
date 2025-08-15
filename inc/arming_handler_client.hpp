@@ -52,25 +52,51 @@ class ArmingHandlerClient : public ClientAbstract {
     ClientEntry<uint8_t> manual_arming_throttle_source_;
     ClientEntry<uint8_t> motor_armed_;
 
-    void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-        static const uint8_t kEntryLength              = kSubMotorArmed + 1;
-        ClientEntryAbstract* entry_array[kEntryLength] = {
-            nullptr,                                // 0
-            &always_armed_,                         // 1
-            &arm_on_throttle_,                      // 2
-            &arm_throttle_upper_limit_,             // 3
-            &arm_throttle_lower_limit_,             // 4
-            &disarm_on_throttle_,                   // 5
-            &disarm_throttle_upper_limit_,          // 6
-            &disarm_throttle_lower_limit_,          // 7
-            &consecutive_arming_throttles_to_arm_,  // 8
-            &disarm_behavior_,                      // 9
-            &disarm_song_option_,                   // 10
-            &manual_arming_throttle_source_,        // 11
-            &motor_armed_                           // 12
-        };
-        ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
+    //     static const uint8_t kEntryLength              = kSubMotorArmed + 1;
+    //     ClientEntryAbstract* entry_array[kEntryLength] = {
+    //         nullptr,                                // 0
+    //         &always_armed_,                         // 1
+    //         &arm_on_throttle_,                      // 2
+    //         &arm_throttle_upper_limit_,             // 3
+    //         &arm_throttle_lower_limit_,             // 4
+    //         &disarm_on_throttle_,                   // 5
+    //         &disarm_throttle_upper_limit_,          // 6
+    //         &disarm_throttle_lower_limit_,          // 7
+    //         &consecutive_arming_throttles_to_arm_,  // 8
+    //         &disarm_behavior_,                      // 9
+    //         &disarm_song_option_,                   // 10
+    //         &manual_arming_throttle_source_,        // 11
+    //         &motor_armed_                           // 12
+    //     };
+    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
+    // }
+
+   uint16_t GetNumberOfClientEntries(){
+	return kSubMotorArmed + 1;
+   }
+
+  void GetClientEntryList(ClientEntryAbstract ** client_entries){
+    ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
+        nullptr,                                // 0
+        &always_armed_,                         // 1
+        &arm_on_throttle_,                      // 2
+        &arm_throttle_upper_limit_,             // 3
+        &arm_throttle_lower_limit_,             // 4
+        &disarm_on_throttle_,                   // 5
+        &disarm_throttle_upper_limit_,          // 6
+        &disarm_throttle_lower_limit_,          // 7
+        &consecutive_arming_throttles_to_arm_,  // 8
+        &disarm_behavior_,                      // 9
+        &disarm_song_option_,                   // 10
+        &manual_arming_throttle_source_,        // 11
+        &motor_armed_                           // 12
+    };
+
+    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
+	    client_entries[entry] = entry_array[entry];
     }
+  }
 
    private:
     static const uint8_t kSubAlwaysArmed                     = 1;
