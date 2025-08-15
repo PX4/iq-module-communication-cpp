@@ -52,31 +52,32 @@ class UavcanNodeClient : public ClientAbstract {
     ClientEntry<uint32_t> bit_rate_;
     ClientEntry<uint8_t> bypass_arming_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-    //     static const uint8_t kEntryLength              = kSubBypassArming + 1;
-    //     ClientEntryAbstract* entry_array[kEntryLength] = {
-    //         &uavcan_node_id_,          // 0
-    //         &uavcan_esc_index_,        // 1
-    //         &zero_behavior_,           // 2
-    //         &last_error_code_,         // 3
-    //         &receive_error_counter_,   // 4
-    //         &transmit_error_counter_,  // 5
-    //         &bus_off_flag_,            // 6
-    //         &error_passive_flag_,      // 7
-    //         &error_warning_flag_,      // 8
-    //         &telemetry_frequency_,     // 9
-    //         &bit_rate_,                // 10
-    //         &bypass_arming_            // 11
-    //     };
+    uint16_t GetNumberOfClientEntries(){
+      return kSubBypassArming + 1;
+    }
 
-    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubBypassArming + 1;
-   }
+      ClientEntryAbstract* entry_array[num_entries] = {
+          &uavcan_node_id_,          // 0
+          &uavcan_esc_index_,        // 1
+          &zero_behavior_,           // 2
+          &last_error_code_,         // 3
+          &receive_error_counter_,   // 4
+          &transmit_error_counter_,  // 5
+          &bus_off_flag_,            // 6
+          &error_passive_flag_,      // 7
+          &error_warning_flag_,      // 8
+          &telemetry_frequency_,     // 9
+          &bit_rate_,                // 10
+          &bypass_arming_            // 11
+      };
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubUavcanNodeId         = 0;

@@ -68,38 +68,40 @@ class CoilTemperatureEstimatorClient : public ClientAbstract {
     ClientEntry<float> q_lam_alu_;
     ClientEntry<float> t_lam_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-    //     static const uint8_t kEntryLength              = kSubTLam + 1;
-    //     ClientEntryAbstract* entry_array[kEntryLength] = {
-    //         &t_coil_,                        // 0
-    //         &t_alu_,                         // 1
-    //         &t_amb_,                         // 2
-    //         &h_coil_amb_free_conv_,          // 3
-    //         &h_coil_stator_cond_,            // 4
-    //         &h_coil_amb_forced_conv_,        // 5
-    //         &c_coil_,                        // 6
-    //         &h_coil_amb_forced_conv_coeff_,  // 7
-    //         &otw_,                           // 8
-    //         &otlo_,                          // 9
-    //         &derate_,                        // 10
-    //         &q_coil_joule_,                  // 11
-    //         &q_coil_amb_conv_,               // 12
-    //         &q_coil_stator_cond_,            // 13
-    //         &h_lam_alu_,                     // 14
-    //         &c_lam_,                         // 15
-    //         &k_lam_hist_coeff_,              // 16
-    //         &q_lam_hist_,                    // 17
-    //         &q_lam_alu_,                     // 18
-    //         &t_lam_                          // 19
-    //     };
-    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    uint16_t GetNumberOfClientEntries(){
+      return kSubTLam + 1;
+    }
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubTLam + 1;
-   }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      ClientEntryAbstract* entry_array[num_entries] = {
+          &t_coil_,                        // 0
+          &t_alu_,                         // 1
+          &t_amb_,                         // 2
+          &h_coil_amb_free_conv_,          // 3
+          &h_coil_stator_cond_,            // 4
+          &h_coil_amb_forced_conv_,        // 5
+          &c_coil_,                        // 6
+          &h_coil_amb_forced_conv_coeff_,  // 7
+          &otw_,                           // 8
+          &otlo_,                          // 9
+          &derate_,                        // 10
+          &q_coil_joule_,                  // 11
+          &q_coil_amb_conv_,               // 12
+          &q_coil_stator_cond_,            // 13
+          &h_lam_alu_,                     // 14
+          &c_lam_,                         // 15
+          &k_lam_hist_coeff_,              // 16
+          &q_lam_hist_,                    // 17
+          &q_lam_alu_,                     // 18
+          &t_lam_                          // 19
+      };
+
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubTCoil                   = 0;

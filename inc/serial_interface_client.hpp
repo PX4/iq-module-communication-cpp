@@ -30,21 +30,21 @@ class SerialInterfaceClient: public ClientAbstract{
     // Client Entries
     ClientEntry<uint32_t> baud_rate_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length)
-    // {
-    //   static const uint8_t kEntryLength = kSubBaudRate+1;
-    //   ClientEntryAbstract* entry_array[kEntryLength] = {
-    //     &baud_rate_,     // 0
-    //   };
+    uint16_t GetNumberOfClientEntries(){
+      return kSubBaudRate + 1;
+    }
 
-    //   ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubBaudRate + 1;
-   }
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &baud_rate_,     // 0
+      };
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
   private:
     static const uint8_t kSubBaudRate = 0;

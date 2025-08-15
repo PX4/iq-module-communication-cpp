@@ -33,20 +33,22 @@ class PulsingRectangularInputParserClient : public ClientAbstract {
     ClientEntry<uint8_t> pulsing_voltage_mode_;
     ClientEntry<float> pulsing_voltage_limit_;
 
-   uint16_t GetNumberOfClientEntries(){
-	return pulsing_voltage_limit_ + 1;
-   }
-
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){
-	ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
-		&pulsing_voltage_mode_,  // 0
-        	&pulsing_voltage_limit_  // 1
-	}
-
-    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
-	client_entries[entry] = entry_array[entry];
+    uint16_t GetNumberOfClientEntries(){
+      return kSubPulsingVoltageLimit + 1;
     }
-  }
+
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
+
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &pulsing_voltage_mode_,  // 0
+        &pulsing_voltage_limit_  // 1
+      };
+
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubPulsingVoltageMode  = 0;

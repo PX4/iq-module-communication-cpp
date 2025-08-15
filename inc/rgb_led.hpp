@@ -26,34 +26,35 @@ class RgbLedClient : public ClientAbstract {
           strobe_pattern_(kTypeRgbLed, obj_idn, kSubStrobePattern){};
 
     // Client Entries
-	ClientEntry<uint8_t> red_;
-	ClientEntry<uint8_t> green_;
-	ClientEntry<uint8_t> blue_;
-	ClientEntryVoid update_color_;
-	ClientEntry<uint8_t> strobe_active_;
-	ClientEntry<float> strobe_period_;
-	ClientEntry<uint32_t> strobe_pattern_;
+    ClientEntry<uint8_t> red_;
+    ClientEntry<uint8_t> green_;
+    ClientEntry<uint8_t> blue_;
+    ClientEntryVoid update_color_;
+    ClientEntry<uint8_t> strobe_active_;
+    ClientEntry<float> strobe_period_;
+    ClientEntry<uint32_t> strobe_pattern_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-    //     static const uint8_t kEntryLength              = kSubStrobePattern + 1;
-    //     ClientEntryAbstract* entry_array[kEntryLength] = {
-		// 	&red_,              // 0
-		// 	&green_,            // 1
-		// 	&blue_,             // 2
-		// 	&update_color_,     // 3
-		// 	&strobe_active_,    // 4
-		// 	&strobe_period_,    // 5
-		// 	&strobe_pattern_    // 6
-    //     };
+    uint16_t GetNumberOfClientEntries(){
+      return kSubStrobePattern + 1;
+    }
 
-    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubStrobePattern + 1;
-   }
+      ClientEntryAbstract* entry_array[num_entries] = {
+        &red_,              // 0
+        &green_,            // 1
+        &blue_,             // 2
+        &update_color_,     // 3
+        &strobe_active_,    // 4
+        &strobe_period_,    // 5
+        &strobe_pattern_    // 6
+      };
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubRed              = 0;

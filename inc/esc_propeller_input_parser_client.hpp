@@ -55,7 +55,9 @@ class EscPropellerInputParserClient : public ClientAbstract {
    }
 
   void GetClientEntryList(ClientEntryAbstract ** client_entries){
-    ClientEntryAbstract* entry_array[GetNumberOfClientEntries()] = {
+    uint16_t num_entries = GetNumberOfClientEntries();
+
+    ClientEntryAbstract* entry_array[num_entries] = {
         &mode_,                // 0
         &raw_value_,           // 1
         nullptr,               // 2
@@ -69,7 +71,7 @@ class EscPropellerInputParserClient : public ClientAbstract {
         &zero_spin_tolerance_  // 10
     };
 
-    for(uint16_t entry = 0; entry < GetNumberOfClientEntries(); entry++){
+    for(uint16_t entry = 0; entry < num_entries; entry++){
 	    client_entries[entry] = entry_array[entry];
     }
   }

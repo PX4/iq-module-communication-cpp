@@ -31,20 +31,22 @@ class StoppingHandlerClient : public ClientAbstract {
     ClientEntry<float> stopped_speed_;
     ClientEntry<float> stopped_time_;
 
-    // void ReadMsg(uint8_t* rx_data, uint8_t rx_length) {
-    //     static const uint8_t kEntryLength              = kSubStoppedTime + 1;
-    //     ClientEntryAbstract* entry_array[kEntryLength] = {
-    //         &stopped_speed_,  // 0
-    //         &stopped_time_    // 1
-    //     };
-    //     ParseMsg(rx_data, rx_length, entry_array, kEntryLength);
-    // }
+    uint16_t GetNumberOfClientEntries(){
+      return kSubStoppedTime + 1;
+    }
 
-   uint16_t GetNumberOfClientEntries(){
-	return kSubStoppedTime + 1;
-   }
+    void GetClientEntryList(ClientEntryAbstract ** client_entries){
+      uint16_t num_entries = GetNumberOfClientEntries();
 
-  void GetClientEntryList(ClientEntryAbstract ** client_entries){}
+      ClientEntryAbstract* entry_array[num_entries] = {
+          &stopped_speed_,  // 0
+          &stopped_time_    // 1
+      };
+
+      for(uint16_t entry = 0; entry < num_entries; entry++){
+        client_entries[entry] = entry_array[entry];
+      }
+    }
 
    private:
     static const uint8_t kSubStoppedSpeed = 0;
