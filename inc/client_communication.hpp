@@ -204,6 +204,8 @@ class ClientAbstract{
 
     void UpdateModuleId(uint8_t new_id){
       obj_idn_ = new_id;
+
+      UpdateEntryIds(new_id);
     }
 
     void UpdateEntryIds(uint8_t new_id){
